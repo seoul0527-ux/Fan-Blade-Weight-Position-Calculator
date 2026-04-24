@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fan Blade Weight Position Calculator</title>
+    <!-- Google Fonts for Modern Typography -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Header -->
+        <header class="app-header">
+            <h1>Fan Blade Balance Weight Position Calculator</h1>
+            <p>Calculate compensation vectors and weight positions easily.</p>
+        </header>
+
+        <main class="main-content">
+            <!-- Left Pane: Visuals -->
+            <section class="visual-pane">
+                <div class="canvas-container glass-panel">
+                    <canvas id="fanCanvas" width="600" height="600"></canvas>
+                </div>
+                <div class="table-container glass-panel">
+                    <img src="table_c.png" alt="Balancing Table" id="tableImage">
+                </div>
+            </section>
+
+            <!-- Right Pane: Controls & Results -->
+            <section class="control-pane">
+                <div class="glass-panel main-controls">
+                    <!-- Tabs -->
+                    <div class="tabs">
+                        <button class="tab-btn active" data-tab="mode1">블레이드 1개 교체 (단순 교체)</button>
+                        <button class="tab-btn" data-tab="mode2">70 MWD 이상 발생 시</button>
+                    </div>
+
+                    <!-- Tab Contents -->
+                    <div class="tab-content">
+                        <!-- Mode 1: Simple Replacement -->
+                        <div id="mode1" class="tab-pane active">
+                            <form id="form-mode1" class="calc-form">
+                                <div class="form-group">
+                                    <label for="m1-pos">교체 블레이드 Position (1~20):</label>
+                                    <input type="number" id="m1-pos" min="1" max="20" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="m1-s">장탈 블레이드의 Radial Moment Weight (S):</label>
+                                    <input type="number" step="any" id="m1-s" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="m1-r">장착 블레이드의 Radial Moment Weight (R):</label>
+                                    <input type="number" step="any" id="m1-r" required>
+                                </div>
+                                <button type="submit" class="calc-btn">Weight 장착 위치 계산</button>
+                            </form>
+                        </div>
+
+                        <!-- Mode 2: Magnitude Calculation -->
+                        <div id="mode2" class="tab-pane">
+                            <form id="form-mode2" class="calc-form">
+                                <div class="form-group">
+                                    <label for="m2-pos">교체 블레이드 Position (1~20):</label>
+                                    <input type="number" id="m2-pos" min="1" max="20" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="m2-r">장착할 블레이드의 Radial Moment Weight (R):</label>
+                                    <input type="number" step="any" id="m2-r" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="m2-p">장착할 반대쪽 블레이드의 Radial Moment Weight (P):</label>
+                                    <input type="number" step="any" id="m2-p" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="m2-s">장탈된 블레이드의 Radial Moment Weight (S):</label>
+                                    <input type="number" step="any" id="m2-s" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="m2-o">장탈된 반대쪽 블레이드의 Radial Moment Weight (O):</label>
+                                    <input type="number" step="any" id="m2-o" required>
+                                </div>
+                                <button type="submit" class="calc-btn">Weight 장착 위치 계산</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Results Section -->
+                <div class="glass-panel results-section">
+                    <div class="results-header">
+                        <h2>계산 결과</h2>
+                        <button id="copy-btn" class="copy-btn" title="결과 복사">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                            복사
+                        </button>
+                    </div>
+                    <div id="result-display" class="result-display">
+                        <p class="placeholder">계산 버튼을 누르면 여기에 결과가 표시됩니다.</p>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="toast">클립보드에 복사되었습니다!</div>
+
+    <script src="app.js"></script>
+</body>
+</html>
